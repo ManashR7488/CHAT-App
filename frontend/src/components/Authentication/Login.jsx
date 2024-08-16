@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./login.css";
 import { FcGoogle } from "react-icons/fc";
 import { FaCircleNotch, FaFacebookF } from "react-icons/fa";
@@ -8,9 +8,10 @@ import { RiEyeCloseLine } from "react-icons/ri";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { IoCloudUpload } from "react-icons/io5";
 import { FcOk } from "react-icons/fc";
+import { ChatState } from "../../Context/ChatProvider";
 
 const Login = () => {
   const [upName, setUpName] = useState();
@@ -30,7 +31,7 @@ const Login = () => {
 
   const container = useRef(null);
   const navigate = useNavigate();
-
+  
   const signUpFunction = () => {
     container.current.classList.add("active");
   };
@@ -98,7 +99,7 @@ const Login = () => {
       };
 
       const { data } = await axios.post(
-        "/api/user",
+        "/api/user/",
         {
           name: upName,
           password: upPassword,
@@ -108,20 +109,45 @@ const Login = () => {
         config
       );
 
-      console.log(data);
+      // console.log(data);
       toast.success("Registration Successful", { position: "top-right" });
       setUpLoading(false);
       navigate("/chat");
     } catch (error) {
-      console.log(error);
-      toast.error(error, { position: "top-right" });
+      toast.error(error.response.data.message, { position: "top-right" });
       setUpLoading(false);
     }
   };
 
-  const signInHandler = (e) => {
+  const signInHandler = async (e) => {
     e.preventDefault();
+    setUpLoading(true);
+    if (!inEmail || !inPassword) {
+      toast.warn("Please fill all the fields", { position: "top-right" });
+      setUpLoading(false);
+      return;
+    }
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+      const { data } = await axios.post(
+        "/api/user/signIn",
+        { email: inEmail, password: inPassword },
+        config
+      );
+      // console.log(data);
+      toast.success("Login Success", { position: "top-right" });
+      setUpLoading(false);
+      navigate("/chat");
+    } catch (error) {
+      toast.error(error.response.data.message, { position: "top-right" });
+      setUpLoading(false);
+    }
   };
+  
 
   return (
     <div className="bg-[#000000] bg-gradient-to-br from-[#2e1022] to-[#09153b] h-screen w-full flex flex-col justify-center items-center">
@@ -235,7 +261,7 @@ const Login = () => {
                 ) : (
                   <IoCloudUpload className="inline text-[16px]" />
                 )}
-                Choose profile picture
+                Choose profile picture (optional)
               </label>
               <input
                 id="fileIn"
@@ -335,12 +361,24 @@ const Login = () => {
             <a href="#" className="text-[#333] text-[13px] m-[15px_0_10px]">
               Forget Your Password
             </a>
-            <button
-              type="submit"
-              className=" bg-[#513da8] text-white text-[12px] py-[10px] px-[45px] border border-solid border-transparent rounded-[8px] font-[600] tracking-[0.5px] uppercase mt-[10px] cursor-pointer"
-            >
-              Sign In
-            </button>
+            <div className=" bg-[#7765c9] text-white text-[12px] mt-[10px] rounded-[8px] overflow-hidden">
+              {upLoading ? (
+                <button
+                  type="submit"
+                  disabled
+                  className="h-full w-full text-white text-[12px] py-[8px] px-[45px] border border-solid border-transparent  font-[600] tracking-[0.5px] uppercase cursor-not-allowed "
+                >
+                  <FaCircleNotch className="text-[18px] animate-spin" />
+                </button>
+              ) : (
+                <button
+                  type="submit"
+                  className=" bg-[#513da8] text-white text-[12px] py-[10px] px-[45px] border border-solid border-transparent  font-[600] tracking-[0.5px] uppercase cursor-pointer"
+                >
+                  Sign In
+                </button>
+              )}
+            </div>
           </form>
         </div>
         <div className="toggle-container absolute top-0 left-1/2 w-1/2 h-full overflow-hidden z-[1000] rounded-[150px_0_0_100px]">
