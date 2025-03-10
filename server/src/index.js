@@ -5,7 +5,7 @@ import messageRoutes from "./routes/message.route.js";
 import { connectDB } from "./lib/db.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
-import { app, server } from "./lib/socket.js";
+import { app, FRONTEND_URL, server } from "./lib/socket.js";
 import path from "path";
 
 dotenv.config();
@@ -16,7 +16,7 @@ const port = process.env.PORT || 3000;
 app.use(cookieParser());
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: FRONTEND_URL,
     credentials: true,
   })
 );
@@ -25,17 +25,20 @@ app.use(express.urlencoded({ limit: "5mb", extended: true }));
 
 app.use("/api/auth", authRoutes);
 app.use("/api/messages", messageRoutes);
+app.get("/",(req, res)=>{
+  res.send("app is runing");
+})
 
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "../client/build")));
+// if (process.env.NODE_ENV === "production") {
+//   app.use(express.static(path.join(__dirname, "../client/build")));
 
-  app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "../client", "dist", "index.html"));
-  });
-}
+//   app.get("*", (req, res) => {
+//     res.sendFile(path.join(__dirname, "../client", "dist", "index.html"));
+//   });
+// }
 
 server.listen(port, () => {
   console.log(`Server is running on port ${port}`);
   connectDB();
-  console.log(`http://localhost:${port}`);
+  process.env.NODE_ENV === "development" && console.log(`http://localhost:${port}`);
 });
