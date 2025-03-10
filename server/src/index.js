@@ -5,7 +5,7 @@ import messageRoutes from "./routes/message.route.js";
 import { connectDB } from "./lib/db.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
-import { app, FRONTEND_URL, server } from "./lib/socket.js";
+import { app, server } from "./lib/socket.js";
 import path from "path";
 
 dotenv.config();
@@ -14,6 +14,8 @@ const __dirname = path.resolve();
 const port = process.env.PORT || 3000;
 
 app.use(cookieParser());
+
+const FRONTEND_URL = (process.env.NODE_ENV === "development") ? "http://localhost:5173" : "https://mr2-chats.vercel.app/";
 app.use(
   cors({
     origin: FRONTEND_URL,
