@@ -37,8 +37,9 @@ app.get("/",(req, res)=>{
 //   });
 // }
 
-server.listen(port, () => {
+server.listen(port,async () => {
   console.log(`Server is running on port ${port}`);
-  connectDB();
+  process.env.MONGODB_URI && console.log("MONGODB_URI is define");
+   await connectDB();
   process.env.NODE_ENV === "development" && console.log(`http://localhost:${port}`);
 });
