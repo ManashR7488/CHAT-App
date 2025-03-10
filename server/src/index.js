@@ -42,4 +42,4 @@ server.listen(port,async () => {
   process.env.MONGODB_URI && console.log("MONGODB_URI is define");
    await connectDB();
   process.env.NODE_ENV === "development" && console.log(`http://localhost:${port}`);
-});
+}); 
