@@ -18,7 +18,8 @@ app.use(cookieParser());
 const FRONTEND_URL = (process.env.NODE_ENV === "development") ? "http://localhost:5173" : "https://mr2-chats.vercel.app/";
 app.use(
   cors({
-    origin: FRONTEND_URL,
+    origin: "https://mr2-chats.vercel.app/",
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true,
   })
 );
