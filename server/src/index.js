@@ -15,9 +15,9 @@ const port = process.env.PORT || 3000;
 
 app.use(cookieParser());
 
-const FRONTEND_URL = (process.env.NODE_ENV === "development") ? "http://localhost:5173" : "https://mr2-chats.vercel.app/";
+const FRONTEND_URL = (process.env.NODE_ENV === "development") ? "http://localhost:5173" : "https://mr2-chats.vercel.app";
 const allowedOrigins = [
-  'https://mr2-chats.vercel.app/',
+  'https://mr2-chats.vercel.app',
   'http://localhost:5173',
 ];
 
