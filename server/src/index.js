@@ -16,23 +16,25 @@ const port = process.env.PORT || 3000;
 app.use(cookieParser());
 
 const FRONTEND_URL = (process.env.NODE_ENV === "development") ? "http://localhost:5173" : "https://mr2-chats.vercel.app";
-const allowedOrigins = [
-  'https://mr2-chats.vercel.app',
-  'http://localhost:5173',
-];
+// const allowedOrigins = [
+//   'https://mr2-chats.vercel.app',
+//   'http://localhost:5173',
+// ];
+
+// function (origin, callback) {
+//   // Allow requests with no origin (like mobile apps or curl requests)
+//   if (!origin) return callback(null, true);
+
+//   // Check if the incoming origin is in the allowed list
+//   if (allowedOrigins.indexOf(origin) !== -1) {
+//     return callback(null, true);
+//   } else {
+//     return callback(new Error('Not allowed by CORS'));
+//   }
+// }
 
 const corsOptions = {
-  origin: function (origin, callback) {
-    // Allow requests with no origin (like mobile apps or curl requests)
-    if (!origin) return callback(null, true);
-
-    // Check if the incoming origin is in the allowed list
-    if (allowedOrigins.indexOf(origin) !== -1) {
-      return callback(null, true);
-    } else {
-      return callback(new Error('Not allowed by CORS'));
-    }
-  },
+  origin: "*",
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   credentials: true,
 };
