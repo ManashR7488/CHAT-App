@@ -19,10 +19,7 @@ const FRONTEND_URL = (process.env.NODE_ENV === "development") ? "http://localhos
 
 // Use the CORS middleware with our options
 app.use(cors({
-  origin: [
-    "http://localhost:5173",
-    "https://mr2-chats.vercel.app"
-  ],
+  origin: true,
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization", "x-csrf-token", "X-Requested-With"]

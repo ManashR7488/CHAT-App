@@ -8,7 +8,7 @@ const FRONTEND_URL = (process.env.NODE_ENV === "development") ? "http://localhos
 
 const io = new Server(server, {
   cors: {
-    origin: [FRONTEND_URL], 
+    origin: true, 
   },
 });
 
