@@ -15,7 +15,7 @@ const port = process.env.PORT || 3000;
 
 app.use(cookieParser());
 
-const FRONTEND_URL = (process.env.NODE_ENV === "development") ? "http://localhost:5173" : "/";
+const FRONTEND_URL = (process.env.NODE_ENV === "development") ? "http://localhost:5173" : "https://mr2-chats.vercel.app";
 
 // Use the CORS middleware with our options
 app.use(cors({
@@ -31,17 +31,14 @@ app.use(express.urlencoded({ limit: "5mb", extended: true }));
 
 app.use("/api/auth", authRoutes);
 app.use("/api/messages", messageRoutes);
-// app.get("/",(req, res)=>{
-//   res.send("app is runing");
-// })
 
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "../client/build")));
+// if (process.env.NODE_ENV === "production") {
+//   app.use(express.static(path.join(__dirname, "../client/build")));
 
-  app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "../client", "dist", "index.html"));
-  });
-}
+//   app.get("*", (req, res) => {
+//     res.sendFile(path.join(__dirname, "../client", "dist", "index.html"));
+//   });
+// }
 
 server.listen(port,async () => {
   console.log(`Server is running on port ${port}`);
