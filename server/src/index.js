@@ -16,32 +16,18 @@ const port = process.env.PORT || 3000;
 app.use(cookieParser());
 
 const FRONTEND_URL = (process.env.NODE_ENV === "development") ? "http://localhost:5173" : "https://mr2-chats.vercel.app";
-// const allowedOrigins = [
-//   'https://mr2-chats.vercel.app',
-//   'http://localhost:5173',
-// ];
-
-// function (origin, callback) {
-//   // Allow requests with no origin (like mobile apps or curl requests)
-//   if (!origin) return callback(null, true);
-
-//   // Check if the incoming origin is in the allowed list
-//   if (allowedOrigins.indexOf(origin) !== -1) {
-//     return callback(null, true);
-//   } else {
-//     return callback(new Error('Not allowed by CORS'));
-//   }
-// }
-
-const corsOptions = {
-  origin: "https://mr2-chats.vercel.app",
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  credentials: true,
-};
 
 // Use the CORS middleware with our options
-app.use(cors(corsOptions));
-app.options('*', cors(corsOptions));
+app.use(cors({
+  origin: [
+    "http://localhost:5173",
+    "https://mr2-chats.vercel.app"
+  ],
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization", "x-csrf-token", "X-Requested-With"]
+}));
+// app.options('*', cors(corsOptions));
 
 app.use(express.json({ limit: "5mb" })); // Increase to 10MB or more as needed
 app.use(express.urlencoded({ limit: "5mb", extended: true }));
