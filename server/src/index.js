@@ -31,9 +31,9 @@ app.use(express.urlencoded({ limit: "5mb", extended: true }));
 
 app.use("/api/auth", authRoutes);
 app.use("/api/messages", messageRoutes);
-app.get("/",(req, res)=>{
-  res.send("app is runing");
-})
+// app.get("/",(req, res)=>{
+//   res.send("app is runing");
+// })
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../client/build")));
