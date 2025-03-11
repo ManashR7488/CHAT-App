@@ -34,7 +34,7 @@ const FRONTEND_URL = (process.env.NODE_ENV === "development") ? "http://localhos
 // }
 
 const corsOptions = {
-  origin: "*",
+  origin: "https://mr2-chats.vercel.app",
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   credentials: true,
 };
