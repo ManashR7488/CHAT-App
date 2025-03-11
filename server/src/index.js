@@ -21,8 +21,7 @@ const FRONTEND_URL = (process.env.NODE_ENV === "development") ? "http://localhos
 app.use(cors({
   origin: FRONTEND_URL,
   credentials: true,
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization", "x-csrf-token", "X-Requested-With"]
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"]
 }));
 // app.options('*', cors(corsOptions));
 
