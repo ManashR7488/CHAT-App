@@ -20,7 +20,7 @@ const FRONTEND_URL = (process.env.NODE_ENV === "development") ? "http://localhos
 // Use the CORS middleware with our options
 app.use(cors({
   origin: ["https://mr2-chats.vercel.app"],
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  methods: ["GET", "POST", "PUT", "DELETE",],
   credentials: true,
 }));
 // app.options('*', cors(corsOptions));
@@ -42,6 +42,6 @@ app.use("/api/messages", messageRoutes);
 server.listen(port,async () => {
   console.log(`Server is running on port ${port}`);
   process.env.MONGODB_URI && console.log("MONGODB_URI is define");
-   await connectDB();
+   await connectDB()
   process.env.NODE_ENV === "development" && console.log(`http://localhost:${port}`);
 }); 
