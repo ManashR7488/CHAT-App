@@ -19,13 +19,13 @@ const FRONTEND_URL = (process.env.NODE_ENV === "development") ? "http://localhos
 
 // Use the CORS middleware with our options
 app.use(cors({
-  origin: FRONTEND_URL,
+  origin: ["https://mr2-chats.vercel.app"],
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   credentials: true,
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"]
 }));
 // app.options('*', cors(corsOptions));
 
-app.use(express.json({ limit: "5mb" })); // Increase to 10MB or more as needed
+app.use(express.json({ limit: "5mb" })); // Increase to 5MB or more as needed
 app.use(express.urlencoded({ limit: "5mb", extended: true }));
 
 app.use("/api/auth", authRoutes);
