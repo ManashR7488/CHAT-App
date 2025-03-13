@@ -4,7 +4,7 @@ import express from "express";
 
 const app = express();
 const server = http.createServer(app);
-const FRONTEND_URL = (process.env.NODE_ENV === "development") ? "http://localhost:5173" : "https://mr2-chats.vercel.app";
+const FRONTEND_URL = (process.env.NODE_ENV === "development") ? "http://localhost:5173" : "/";
 
 const io = new Server(server, {
   cors: {
